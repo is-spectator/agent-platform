@@ -24,8 +24,8 @@
       "aliases": ["mars"]
     },
     "install": {
-      "npmSpec": "openclaw-channel-custom",
-      "localPath": "extensions/custom-channel",
+      "npmSpec": "openclaw-channel-mars",
+      "localPath": "extensions/mars-channel",
       "defaultChoice": "npm"
     },
     "startup": {

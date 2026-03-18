@@ -31,13 +31,13 @@ export async function monitorCustomProvider(
   const parsed = CustomChannelConfigSchema.safeParse(rawConfig);
   if (!parsed.success) {
     throw new Error(
-      `[custom-channel] Invalid config: ${parsed.error.message}`
+      `[mars] Invalid config: ${parsed.error.message}`
     );
   }
   const config = parsed.data as CustomChannelConfig;
 
   if (!config.enabled) {
-    console.log("[custom-channel] Channel is disabled, skipping.");
+    console.log("[mars] Channel is disabled, skipping.");
     return;
   }
 
@@ -125,7 +125,7 @@ async function startWebhookTransport(
   return new Promise<void>((resolve, reject) => {
     server.listen(port, () => {
       console.log(
-        `[custom-channel] Webhook server listening on :${port}${path}`
+        `[mars] Webhook server listening on :${port}${path}`
       );
       handlers.onStatusChange?.("connected");
     });
@@ -152,7 +152,7 @@ async function startWebSocketTransport(
 ): Promise<void> {
   const wsUrl = config.websocketUrl;
   if (!wsUrl) {
-    throw new Error("[custom-channel] websocketUrl is required for WS transport");
+    throw new Error("[mars] websocketUrl is required for WS transport");
   }
 
   const accounts = resolveAccounts(config);
@@ -175,7 +175,7 @@ async function startWebSocketTransport(
       ws.addEventListener("open", () => {
         reconnectAttempt = 0;
         handlers.onStatusChange?.("connected");
-        console.log("[custom-channel] WebSocket connected");
+        console.log("[mars] WebSocket connected");
 
         // Provide a send function for outbound messages.
         setBotGatewaySendFn((payload) => {
@@ -224,7 +224,7 @@ async function startWebSocketTransport(
         }
         if (reconnectAttempt >= MAX_RECONNECT) {
           handlers.onError?.(
-            new Error("[custom-channel] Max reconnection attempts reached")
+            new Error("[mars] Max reconnection attempts reached")
           );
           handlers.onStatusChange?.("error");
           resolve();
@@ -234,7 +234,7 @@ async function startWebSocketTransport(
         const delay = BASE_DELAY_MS * 2 ** reconnectAttempt;
         reconnectAttempt++;
         console.log(
-          `[custom-channel] Reconnecting in ${delay}ms (attempt ${reconnectAttempt})`
+          `[mars] Reconnecting in ${delay}ms (attempt ${reconnectAttempt})`
         );
         await sleep(delay);
         if (!signal.aborted) {
@@ -275,7 +275,7 @@ async function startPollingTransport(
 
   handlers.onStatusChange?.("connected");
   console.log(
-    `[custom-channel] Polling every ${intervalMs}ms`
+    `[mars] Polling every ${intervalMs}ms`
   );
 
   while (!signal.aborted) {
@@ -334,7 +334,7 @@ async function processEvent(
   const access = evaluateAccess(event, config);
   if (!access.allowed) {
     console.log(
-      `[custom-channel] Blocked event ${event.eventId}: ${access.reason}`
+      `[mars] Blocked event ${event.eventId}: ${access.reason}`
     );
     return;
   }
@@ -356,13 +356,13 @@ function parseAndValidateEvent(raw: string): RawInboundEvent | null {
     const result = RawInboundEventSchema.safeParse(json);
     if (!result.success) {
       console.warn(
-        `[custom-channel] Invalid event: ${result.error.message}`
+        `[mars] Invalid event: ${result.error.message}`
       );
       return null;
     }
     return result.data as RawInboundEvent;
   } catch {
-    console.warn("[custom-channel] Failed to parse event JSON");
+    console.warn("[mars] Failed to parse event JSON");
     return null;
   }
 }

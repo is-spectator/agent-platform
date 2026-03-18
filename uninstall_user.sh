@@ -6,16 +6,16 @@ set -euo pipefail
 #
 # Remove the custom channel plugin from a USER machine.
 # It will:
-# - delete ~/.openclaw/extensions/custom-channel
-# - remove channels.custom from ~/.openclaw/config.json
-# - remove bindings entries that match (channel=custom)
+# - delete ~/.openclaw/extensions/mars-channel
+# - remove channels.mars from ~/.openclaw/config.json
+# - remove bindings entries that match (channel=mars)
 # - restart OpenClaw gateway
 #
 # Requirements: jq, openclaw
 # =============================================================
 
 CFG="${HOME}/.openclaw/config.json"
-EXT_DIR="${HOME}/.openclaw/extensions/custom-channel"
+EXT_DIR="${HOME}/.openclaw/extensions/mars-channel"
 
 need() { command -v "$1" >/dev/null 2>&1 || { echo "Missing: $1"; exit 1; }; }
 
@@ -25,13 +25,13 @@ need openclaw
 if [[ ! -f "$CFG" ]]; then
   echo "No config found at $CFG, nothing to do."
 else
-  echo "[1/4] Update OpenClaw config: remove channels.custom and bindings(match.channel=custom)"
+  echo "[1/4] Update OpenClaw config: remove channels.mars and bindings(match.channel=mars)"
   tmp="$(mktemp)"
   jq '
     .channels = (.channels // {}) |
-    .channels |= with_entries(select(.key != "custom")) |
+    .channels |= with_entries(select(.key != "mars")) |
     .bindings = (.bindings // []) |
-    .bindings |= [ .[] | select((.match.channel // "") != "custom") ]
+    .bindings |= [ .[] | select((.match.channel // "") != "mars") ]
   ' "$CFG" > "$tmp"
   mv "$tmp" "$CFG"
 fi

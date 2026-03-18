@@ -1,6 +1,6 @@
-# openclaw-channel-custom (Bot Gateway Edition)
+# openclaw-channel-mars (Bot Gateway Edition)
 
-This repo provides a **Custom Channel** plugin for OpenClaw designed for the following product workflow:
+This repo provides a **Mars** plugin for OpenClaw designed for the following product workflow:
 
 1. Your SaaS provides a **web chat UI**.
 2. A user creates a **Bot** in your SaaS → gets `botId` + `botToken`.
@@ -73,7 +73,7 @@ In `~/.openclaw/config.json` on the user machine:
 ```jsonc
 {
   "channels": {
-    "custom": {
+    "mars": {
       "enabled": true,
       "transport": "websocket",
       "websocketUrl": "ws://47.90.246.218:8081/ws/openclaw",
@@ -94,7 +94,7 @@ In `~/.openclaw/config.json` on the user machine:
   "bindings": [
     {
       "agentId": "my-assistant",
-      "match": { "channel": "custom", "accountId": "main" }
+      "match": { "channel": "mars", "accountId": "main" }
     }
   ]
 }

@@ -62,7 +62,7 @@ export async function sendMessage(
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     throw new Error(
-      `[custom-channel] Failed to send message: HTTP ${res.status} — ${text}`
+      `[mars] Failed to send message: HTTP ${res.status} — ${text}`
     );
   }
 
@@ -98,7 +98,7 @@ export async function editMessage(
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     throw new Error(
-      `[custom-channel] Failed to edit message ${messageId}: HTTP ${res.status} — ${text}`
+      `[mars] Failed to edit message ${messageId}: HTTP ${res.status} — ${text}`
     );
   }
 }

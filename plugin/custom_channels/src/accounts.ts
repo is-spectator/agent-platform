@@ -18,7 +18,7 @@ export function resolveAccounts(
     const parsed = CustomAccountConfigSchema.safeParse(raw);
     if (!parsed.success) {
       console.warn(
-        `[custom-channel] Skipping account "${accountId}": ${parsed.error.message}`
+        `[mars] Skipping account "${accountId}": ${parsed.error.message}`
       );
       continue;
     }
@@ -32,7 +32,7 @@ export function resolveAccounts(
 
   if (resolved.size === 0) {
     throw new Error(
-      "[custom-channel] No valid accounts found. Check your configuration."
+      "[mars] No valid accounts found. Check your configuration."
     );
   }
 

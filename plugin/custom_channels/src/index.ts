@@ -1,5 +1,5 @@
 /**
- * openclaw-channel-custom
+ * openclaw-channel-mars
  *
  * Custom channel plugin for OpenClaw.
  * Drop-in integration for your product — similar to Telegram, Discord, Slack.
@@ -8,7 +8,7 @@
  *
  *   {
  *     "channels": {
- *       "custom": {
+ *       "mars": {
  *         "enabled": true,
  *         "transport": "webhook",
  *         "webhook": { "port": 3100, "path": "/webhook/custom" },

@@ -22,7 +22,7 @@ export function sendOutboundToGateway(
   content: MessageContent,
   messageId: string
 ): void {
-  if (!SEND_FN) throw new Error("[custom-channel] Bot Gateway WS not connected");
+  if (!SEND_FN) throw new Error("[mars] Bot Gateway WS not connected");
 
   // Map OpenClaw outbound → gateway assistant_message
   const sessionId = target.conversationId;

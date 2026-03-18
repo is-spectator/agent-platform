@@ -1,4 +1,4 @@
-# Custom Channel Plugin (source)
+# Mars Plugin (source)
 
 This directory contains the OpenClaw custom channel plugin source.
 

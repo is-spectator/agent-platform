@@ -1,9 +1,9 @@
-# Agent Platform (Bot Gateway + OpenClaw Custom Channel)
+# Agent Platform (Bot Gateway + OpenClaw Mars)
 
 这份目录是按 **部署角色** 拆分的：
 
 - `server/`：部署在云服务器上的 **Bot Gateway**（中转服务）
-- `plugin/`：部署在用户本机 OpenClaw 上的 **Custom Channel 插件**
+- `plugin/`：部署在用户本机 OpenClaw 上的 **Mars 插件**
 
 目标：让用户在你的 Web 对话框里与 **自己本机的 OpenClaw** 交互（多会话），并且支持家宽/NAT（通过出站 WebSocket）。
 

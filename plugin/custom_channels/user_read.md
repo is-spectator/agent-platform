@@ -1,4 +1,4 @@
-# 用户使用说明（User Guide）— Custom Channel + Bot Gateway
+# 用户使用说明（User Guide）— Mars + Bot Gateway
 
 这份文档面向 **最终用户**：你在网页后台创建 Bot，拿到 `botId` + `botToken` 后，把它绑定到你本机的 OpenClaw，即可在网页对话框中与本机 OpenClaw 交互（支持多会话）。
 
@@ -43,10 +43,10 @@ export AGENT_ID="my-assistant"   # 你本机 OpenClaw 的 agentId
 
 ### 2）下载并运行安装脚本
 
-把下面脚本保存为 `install-custom-channel.sh` 然后执行：
+把下面脚本保存为 `install-mars-channel.sh` 然后执行：
 
 ```bash
-bash install-custom-channel.sh
+bash install-mars-channel.sh
 ```
 
 脚本内容如下（HTTPS clone 版本）：
@@ -68,8 +68,8 @@ OPENCLAW_WS_URL="ws://47.90.246.218:8081/ws/openclaw"
 REPO_HTTPS="https://github.com/is-spectator/custom_channels.git"
 BRANCH="codex/agent-platform-phase2"
 
-WORKDIR="${HOME}/.openclaw/tmp/custom-channel-install"
-EXT_DIR="${HOME}/.openclaw/extensions/custom-channel"
+WORKDIR="${HOME}/.openclaw/tmp/mars-channel-install"
+EXT_DIR="${HOME}/.openclaw/extensions/mars-channel"
 CFG="${HOME}/.openclaw/config.json"
 
 need() { command -v "$1" >/dev/null 2>&1 || { echo "Missing: $1"; exit 1; }; }
@@ -120,7 +120,7 @@ jq \
   --arg wsUrl "${OPENCLAW_WS_URL}" \
   '
   .channels = (.channels // {}) |
-  .channels.custom = {
+  .channels.mars = {
     enabled: true,
     transport: "websocket",
     websocketUrl: $wsUrl,
@@ -136,8 +136,8 @@ jq \
     }
   } |
   .bindings = (.bindings // []) |
-  .bindings = ([.bindings[] | select(.match.channel != "custom" or (.match.accountId // "") != "main" or .agentId != $agentId)] + [
-    { agentId: $agentId, match: { channel: "custom", accountId: "main" } }
+  .bindings = ([.bindings[] | select(.match.channel != "mars" or (.match.accountId // "") != "main" or .agentId != $agentId)] + [
+    { agentId: $agentId, match: { channel: "mars", accountId: "main" } }
   ])
   ' "$CFG" > "$tmp"
 

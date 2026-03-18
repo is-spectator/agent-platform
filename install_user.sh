@@ -9,8 +9,8 @@ set -euo pipefail
 # What it does:
 # - HTTPS clone the plugin repo
 # - npm install + build
-# - install into ~/.openclaw/extensions/custom-channel
-# - merge ~/.openclaw/config.json (channels.custom + bindings)
+# - install into ~/.openclaw/extensions/mars-channel
+# - merge ~/.openclaw/config.json (channels.mars + bindings)
 # - restart OpenClaw gateway
 #
 # Requirements on user machine:
@@ -37,7 +37,7 @@ BRANCH="main"
 
 WORKDIR="${HOME}/.openclaw/tmp/agent-platform-install"
 PLUGIN_DIR_REL="plugin/custom_channels"
-EXT_DIR="${HOME}/.openclaw/extensions/custom-channel"
+EXT_DIR="${HOME}/.openclaw/extensions/mars-channel"
 CFG="${HOME}/.openclaw/config.json"
 
 need() { command -v "$1" >/dev/null 2>&1 || { echo "Missing: $1"; exit 1; }; }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Custom Channel — OpenClaw Integration</title>
+  <title>Mars — OpenClaw Integration</title>
   <style>
     :root {
       --bg: #0f1117;
@@ -317,7 +317,7 @@
   <!-- Header -->
   <header>
     <div class="logo">C</div>
-    <h1>Custom Channel</h1>
+    <h1>Mars</h1>
     <span class="badge">OpenClaw Plugin</span>
   </header>
 
@@ -375,7 +375,7 @@
               Add the <strong>custom</strong> channel block with your token:
               <pre class="config-block" id="configBlock"><button class="btn btn-secondary btn-sm copy-btn" onclick="copyConfig()">Copy</button>{
   "channels": {
-    "custom": {
+    "mars": {
       "enabled": true,
       "transport": "webhook",
       "webhook": {
@@ -405,16 +405,16 @@
           <ol class="steps">
             <li>
               Install the channel plugin:<br>
-              <pre class="config-block">npm install openclaw-channel-custom</pre>
+              <pre class="config-block">npm install openclaw-channel-mars</pre>
             </li>
             <li>
               Set the API token:<br>
-              <pre class="config-block">openclaw config set channels.custom.accounts.main.apiToken "<span class="configTokenCli">YOUR_TOKEN</span>"</pre>
+              <pre class="config-block">openclaw config set channels.mars.accounts.main.apiToken "<span class="configTokenCli">YOUR_TOKEN</span>"</pre>
             </li>
             <li>
               Enable the channel:<br>
-              <pre class="config-block">openclaw config set channels.custom.enabled true
-openclaw config set channels.custom.transport webhook</pre>
+              <pre class="config-block">openclaw config set channels.mars.enabled true
+openclaw config set channels.mars.transport webhook</pre>
             </li>
             <li>
               Restart:<br>

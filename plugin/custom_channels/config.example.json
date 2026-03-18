@@ -1,6 +1,6 @@
 {
   "channels": {
-    "custom": {
+    "mars": {
       "enabled": true,
       "transport": "websocket",
       "websocketUrl": "ws://47.90.246.218:8081/ws/openclaw",
