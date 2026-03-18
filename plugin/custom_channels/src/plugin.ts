@@ -64,7 +64,7 @@ interface ChannelPlugin {
 }
 
 const customChannelPlugin: ChannelPlugin = {
-  id: "custom",
+  id: "mars",
   monitor: monitorCustomProvider,
   send: sendMessage,
   edit: editMessage,
@@ -77,7 +77,7 @@ const customChannelPlugin: ChannelPlugin = {
  * Default export — OpenClaw plugin definition.
  */
 export default {
-  id: "custom-channel",
+  id: "mars-channel",
 
   register(api: OpenClawPluginApi) {
     api.registerChannel({ plugin: customChannelPlugin });

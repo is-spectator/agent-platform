@@ -1,7 +1,7 @@
 {
-  "name": "openclaw-channel-custom",
+  "name": "openclaw-channel-mars",
   "version": "1.0.0",
-  "description": "Custom channel plugin for OpenClaw — integrate your product as an OpenClaw messaging channel",
+  "description": "Mars channel plugin for OpenClaw — Bot Gateway relay for web chat ⇄ local OpenClaw",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,17 +39,17 @@
     "extensions": ["./src/plugin.ts"],
     "setupEntry": "./src/setup-entry.ts",
     "channel": {
-      "id": "custom",
-      "label": "Custom Channel",
-      "selectionLabel": "Custom Channel (API)",
-      "docsPath": "/channels/custom",
-      "blurb": "Connect your product to OpenClaw via webhook, WebSocket, or polling.",
+      "id": "mars",
+      "label": "Mars",
+      "selectionLabel": "Mars (Bot Gateway)",
+      "docsPath": "/channels/mars",
+      "blurb": "Mars channel: connect your web chat to local OpenClaw via Bot Gateway.",
       "order": 99,
-      "aliases": ["custom", "my-channel"]
+      "aliases": ["mars"]
     },
     "install": {
-      "npmSpec": "openclaw-channel-custom",
-      "localPath": "extensions/custom-channel",
+      "npmSpec": "openclaw-channel-mars",
+      "localPath": "extensions/mars-channel",
       "defaultChoice": "npm"
     }
   },

@@ -95,7 +95,7 @@ jq \
   --arg wsUrl "$OPENCLAW_WS_URL" \
   '
   .channels = (.channels // {}) |
-  .channels.custom = {
+  .channels.mars = {
     enabled: true,
     transport: "websocket",
     websocketUrl: $wsUrl,
@@ -111,8 +111,8 @@ jq \
     }
   } |
   .bindings = (.bindings // []) |
-  .bindings = ([.bindings[] | select(.match.channel != "custom" or (.match.accountId // "") != "main" or .agentId != $agentId)] + [
-    { agentId: $agentId, match: { channel: "custom", accountId: "main" } }
+  .bindings = ([.bindings[] | select(.match.channel != "mars" or (.match.accountId // "") != "main" or .agentId != $agentId)] + [
+    { agentId: $agentId, match: { channel: "mars", accountId: "main" } }
   ])
   ' "$CFG" > "$tmp"
 
