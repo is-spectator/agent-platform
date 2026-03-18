@@ -1,0 +1,4 @@
+server/bot-gateway/.venv
+server/bot-gateway/__pycache__/
+server/bot-gateway/bot-gateway.pid
+server/bot-gateway/gateway.log
