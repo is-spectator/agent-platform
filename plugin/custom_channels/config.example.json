@@ -1,0 +1,26 @@
+{
+  "channels": {
+    "custom": {
+      "enabled": true,
+      "transport": "websocket",
+      "websocketUrl": "ws://47.90.246.218:8081/ws/openclaw",
+
+      "dmPolicy": "pairing",
+      "allowFrom": [],
+
+      "groupPolicy": "disabled",
+      "groupAllowFrom": [],
+      "groups": {},
+
+      "accounts": {
+        "main": {
+          "label": "production-bot",
+          "botId": "bot_123",
+          "apiBaseUrl": "http://47.90.246.218:8081",
+          "apiToken": "YOUR_BOT_TOKEN_HERE",
+          "webhookSecret": "YOUR_WEBHOOK_SECRET_HERE"
+        }
+      }
+    }
+  }
+}

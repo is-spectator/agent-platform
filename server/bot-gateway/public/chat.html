@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bot Gateway Chat Demo</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 20px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    label { display: block; font-size: 12px; color: #555; margin-bottom: 4px; }
+    input { padding: 8px; width: 320px; max-width: 90vw; }
+    button { padding: 8px 12px; }
+    #log { margin-top: 16px; padding: 12px; border: 1px solid #ddd; height: 50vh; overflow: auto; white-space: pre-wrap; background: #fafafa; }
+    .msg { margin: 6px 0; }
+    .me { color: #0a58ca; }
+    .bot { color: #198754; }
+    .err { color: #dc3545; }
+    code { background: #f2f2f2; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Bot Gateway Chat Demo</h2>
+
+  <p>
+    This is a minimal browser client that connects to <code>/ws/chat</code>.
+    It will relay your messages to the bot's local OpenClaw.
+  </p>
+
+  <div class="row">
+    <div>
+      <label>Gateway WS URL</label>
+      <input id="wsUrl" value="ws://47.90.246.218:8081/ws/chat" />
+    </div>
+    <div>
+      <label>botId</label>
+      <input id="botId" placeholder="bot_..." />
+    </div>
+    <div>
+      <label>sessionId</label>
+      <input id="sessionId" placeholder="sess_..." />
+    </div>
+  </div>
+
+  <div style="margin-top: 12px;" class="row">
+    <button id="connectBtn">Connect</button>
+    <button id="disconnectBtn" disabled>Disconnect</button>
+  </div>
+
+  <div style="margin-top: 16px;" class="row">
+    <div>
+      <label>Message</label>
+      <input id="text" placeholder="Type a message..." />
+    </div>
+    <div style="display:flex; align-items:flex-end; gap: 8px;">
+      <button id="sendBtn" disabled>Send</button>
+    </div>
+  </div>
+
+  <div id="log"></div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const log = (line, cls="") => {
+    const el = document.createElement('div');
+    el.className = 'msg ' + cls;
+    el.textContent = line;
+    $('log').appendChild(el);
+    $('log').scrollTop = $('log').scrollHeight;
+  };
+
+  let ws = null;
+
+  function uuid(prefix) {
+    return prefix + '_' + Math.random().toString(16).slice(2) + Date.now().toString(16);
+  }
+
+  $('connectBtn').onclick = () => {
+    const wsUrl = $('wsUrl').value.trim();
+    const botId = $('botId').value.trim();
+    let sessionId = $('sessionId').value.trim();
+
+    if (!wsUrl) return log('Missing wsUrl', 'err');
+    if (!botId) return log('Missing botId', 'err');
+    if (!sessionId) {
+      sessionId = uuid('sess');
+      $('sessionId').value = sessionId;
+    }
+
+    ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => {
+      log('WS connected');
+      ws.send(JSON.stringify({ type: 'hello', botId, sessionId }));
+      $('connectBtn').disabled = true;
+      $('disconnectBtn').disabled = false;
+      $('sendBtn').disabled = false;
+    };
+
+    ws.onmessage = (ev) => {
+      try {
+        const msg = JSON.parse(ev.data);
+        if (msg.type === 'assistant_message') {
+          const text = msg.message?.text ?? JSON.stringify(msg.message);
+          log('assistant: ' + text, 'bot');
+        } else if (msg.type === 'server_ready') {
+          log('server_ready: ' + JSON.stringify(msg));
+        } else if (msg.type === 'error') {
+          log('error: ' + JSON.stringify(msg), 'err');
+        } else {
+          log('event: ' + JSON.stringify(msg));
+        }
+      } catch (e) {
+        log('raw: ' + ev.data);
+      }
+    };
+
+    ws.onerror = () => {
+      log('WS error', 'err');
+    };
+
+    ws.onclose = () => {
+      log('WS closed');
+      $('connectBtn').disabled = false;
+      $('disconnectBtn').disabled = true;
+      $('sendBtn').disabled = true;
+    };
+  };
+
+  $('disconnectBtn').onclick = () => {
+    if (ws) ws.close();
+    ws = null;
+  };
+
+  $('sendBtn').onclick = () => {
+    if (!ws || ws.readyState !== 1) return;
+    const text = $('text').value;
+    if (!text.trim()) return;
+    const messageId = uuid('m');
+    ws.send(JSON.stringify({ type: 'user_message', messageId, text }));
+    log('me: ' + text, 'me');
+    $('text').value = '';
+  };
+
+  $('text').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') $('sendBtn').click();
+  });
+</script>
+</body>
+</html>

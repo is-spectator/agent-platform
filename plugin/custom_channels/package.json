@@ -1,0 +1,79 @@
+{
+  "name": "openclaw-channel-custom",
+  "version": "1.0.0",
+  "description": "Custom channel plugin for OpenClaw — integrate your product as an OpenClaw messaging channel",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./monitor": {
+      "import": "./dist/monitor.js",
+      "types": "./dist/monitor.d.ts"
+    },
+    "./send": {
+      "import": "./dist/send.js",
+      "types": "./dist/send.d.ts"
+    },
+    "./plugin": {
+      "import": "./dist/plugin.js",
+      "types": "./dist/plugin.d.ts"
+    },
+    "./setup-entry": {
+      "import": "./dist/setup-entry.js",
+      "types": "./dist/setup-entry.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit"
+  },
+  "openclaw": {
+    "extensions": ["./src/plugin.ts"],
+    "setupEntry": "./src/setup-entry.ts",
+    "channel": {
+      "id": "custom",
+      "label": "Custom Channel",
+      "selectionLabel": "Custom Channel (API)",
+      "docsPath": "/channels/custom",
+      "blurb": "Connect your product to OpenClaw via webhook, WebSocket, or polling.",
+      "order": 99,
+      "aliases": ["custom", "my-channel"]
+    },
+    "install": {
+      "npmSpec": "openclaw-channel-custom",
+      "localPath": "extensions/custom-channel",
+      "defaultChoice": "npm"
+    }
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "openclaw-channel",
+    "messaging",
+    "chatbot"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0",
+    "eslint": "^9.0.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=1.0.0"
+  }
+}
