@@ -17,12 +17,20 @@ PORT="8081"
 # =====================================
 
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_HTTPS="https://github.com/is-spectator/agent-platform.git"
+BRANCH="main"
+
 APP_DIR="${ROOT_DIR}/server/bot-gateway"
 
 if [[ ! -d "$APP_DIR" ]]; then
-  echo "ERROR: bot-gateway directory not found: $APP_DIR"
-  echo "Run this script from the agent-platform root directory."
-  exit 1
+  echo "bot-gateway not found at $APP_DIR"
+  echo "Cloning agent-platform repo to populate server/bot-gateway..."
+  tmpdir="$(mktemp -d)"
+  git clone "$REPO_HTTPS" "$tmpdir/agent-platform"
+  (cd "$tmpdir/agent-platform" && git checkout "$BRANCH")
+  mkdir -p "${ROOT_DIR}/server"
+  cp -a "$tmpdir/agent-platform/server/bot-gateway" "${ROOT_DIR}/server/"
+  rm -rf "$tmpdir"
 fi
 
 echo "[1/6] Install python3.11 (dnf)"

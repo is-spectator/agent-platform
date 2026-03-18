@@ -32,10 +32,11 @@ GATEWAY_BASE_URL="http://47.90.246.218:8081"
 OPENCLAW_WS_URL="ws://47.90.246.218:8081/ws/openclaw"
 # =================================
 
-REPO_HTTPS="https://github.com/is-spectator/custom_channels.git"
-BRANCH="codex/agent-platform-phase2"
+REPO_HTTPS="https://github.com/is-spectator/agent-platform.git"
+BRANCH="main"
 
-WORKDIR="${HOME}/.openclaw/tmp/custom-channel-install"
+WORKDIR="${HOME}/.openclaw/tmp/agent-platform-install"
+PLUGIN_DIR_REL="plugin/custom_channels"
 EXT_DIR="${HOME}/.openclaw/extensions/custom-channel"
 CFG="${HOME}/.openclaw/config.json"
 
@@ -65,7 +66,7 @@ if [[ ! -f "$CFG" ]]; then
   echo "{}" > "$CFG"
 fi
 
-echo "[1/7] Clone plugin repo (HTTPS)"
+echo "[1/7] Clone agent-platform repo (HTTPS)"
 rm -rf "$WORKDIR"
 mkdir -p "$(dirname "$WORKDIR")"
 git clone "$REPO_HTTPS" "$WORKDIR"
@@ -73,6 +74,7 @@ cd "$WORKDIR"
 git checkout "$BRANCH"
 
 echo "[2/7] Build plugin"
+cd "$WORKDIR/$PLUGIN_DIR_REL"
 npm install
 npm run build
 
